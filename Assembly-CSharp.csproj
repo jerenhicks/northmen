@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{6A1BDE01-290D-8061-FB33-02AC9C0058D6}</ProjectGuid>
+    <ProjectGuid>{EC269A21-E0F5-F2EF-1E0F-BB9F69205873}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -47,8 +47,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\scripts\CameraManager.cs" />
+     <Compile Include="Assets\scripts\Controllers\TimeController.cs" />
+     <Compile Include="Assets\scripts\DateText.cs" />
      <Compile Include="Assets\scripts\Map.cs" />
+     <Compile Include="Assets\scripts\Models\TerrainEnum.cs" />
      <Compile Include="Assets\scripts\MouseManager.cs" />
+     <Compile Include="Assets\scripts\UI\DateTextUpdater.cs" />
+     <Compile Include="Assets\scripts\UI\PlayButton.cs" />
+     <Compile Include="Assets\scripts\UIManager.cs" />
      <Compile Include="Assets\scripts\Unit.cs" />
      <Compile Include="Assets\scripts\hex.cs" />
  <Reference Include="UnityEngine.UI">

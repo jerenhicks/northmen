@@ -7,6 +7,8 @@ public class Map : MonoBehaviour {
 
     public GameObject hexPrefab;
 
+    public Material[] material;
+
     private static int width = 64;
     private static int height = 80;
 
@@ -29,6 +31,9 @@ public class Map : MonoBehaviour {
                 hex_go.GetComponent<hex>().y = y;
 
                 hex_go.transform.SetParent(this.transform);
+
+                hex_go.GetComponent<hex>().setTerrain(TerrainEnumMethods.getRandomTerrain());
+                hex_go.GetComponent<hex>().setGameObject(hex_go);
 
                 hex_go.isStatic = true;
             }

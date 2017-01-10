@@ -6,6 +6,7 @@ using UnityEngine;
 public class MouseManager : MonoBehaviour {
 
     Unit selectedUnit;
+    private hex previousSelectedHex;
 
 	// Use this for initialization
 	void Start () {
@@ -37,14 +38,24 @@ public class MouseManager : MonoBehaviour {
 
     void processHexClick(GameObject ourHitObject) {
         if (Input.GetMouseButtonDown(0)) {
-            MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
 
-            if (mr.material.color == Color.red) {
-                mr.material.color = Color.white;
+            if (previousSelectedHex != null) {
+                previousSelectedHex.unselect();
             }
-            else {
-                mr.material.color = Color.red;
-            }
+
+            hex hex = ourHitObject.GetComponent<hex>();
+            hex.select();
+            
+            previousSelectedHex = hex;
+
+            //MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
+
+            //if (mr.material.color == Color.red) {
+            //    mr.material.color = Color.white;
+            //}
+            //else {
+            //    mr.material.color = Color.red;
+            //}
 
             if (selectedUnit != null) {
                 selectedUnit.destination = ourHitObject.transform.position;
