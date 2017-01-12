@@ -1,0 +1,23 @@
+{
+	"width": 3,
+	"height": 3,
+	"tiles": [{
+		"terrainType": "GRASS"
+	}, {
+		"terrainType": "GRASS"
+	}, {
+		"terrainType": "GRASS"
+	}, {
+		"terrainType": "ROCK"
+	}, {
+		"terrainType": "ROCK"
+	}, {
+		"terrainType": "ROCK"
+	}, {
+		"terrainType": "SHALLOW_WATER"
+	}, {
+		"terrainType": "SHALLOW_WATER"
+	}, {
+		"terrainType": "SHALLOW_WATER"
+	}]
+}

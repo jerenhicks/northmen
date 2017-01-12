@@ -47,12 +47,15 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\scripts\CameraManager.cs" />
+     <Compile Include="Assets\scripts\Controllers\MapController.cs" />
      <Compile Include="Assets\scripts\Controllers\TimeController.cs" />
      <Compile Include="Assets\scripts\DateText.cs" />
-     <Compile Include="Assets\scripts\Map.cs" />
+     <Compile Include="Assets\scripts\Models\MapItem.cs" />
+     <Compile Include="Assets\scripts\Models\MapTile.cs" />
      <Compile Include="Assets\scripts\Models\TerrainEnum.cs" />
      <Compile Include="Assets\scripts\MouseManager.cs" />
      <Compile Include="Assets\scripts\UI\DateTextUpdater.cs" />
+     <Compile Include="Assets\scripts\UI\LoadMapButton.cs" />
      <Compile Include="Assets\scripts\UI\PlayButton.cs" />
      <Compile Include="Assets\scripts\UIManager.cs" />
      <Compile Include="Assets\scripts\Unit.cs" />
