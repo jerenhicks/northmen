@@ -41,16 +41,16 @@ public class CameraManager : MonoBehaviour {
             if (xPos < -1f) {
                 xPos = -1;
             }
-            if (xPos > MapController.getWidth() + 1) {
-                xPos = MapController.getWidth() + 1;
+            if (xPos > MapController.instance.getWidth() + 1) {
+                xPos = MapController.instance.getWidth() + 1;
             }
             float yPos = cameraRig.position.y;
             float zPos = cameraRig.position.z - mouseMovement.y / 100;
             if (zPos < -2f) {
                 zPos = -2;
             }
-            if (zPos > MapController.getHeight() + 2) {
-                zPos = MapController.getHeight() + 2;
+            if (zPos > MapController.instance.getHeight() + 2) {
+                zPos = MapController.instance.getHeight() + 2;
             }
             cameraRig.position = new Vector3(xPos, yPos, zPos);
 

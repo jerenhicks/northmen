@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class MouseManager : MonoBehaviour {
+public class MouseController : MonoBehaviour {
 
     Unit selectedUnit;
     private hex previousSelectedHex;
+    private static MouseController controller;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +36,17 @@ public class MouseManager : MonoBehaviour {
             }
         }
 	}
+
+    private MouseController() {
+
+    }
+
+    public static MouseController getInstance() {
+        if (controller == null) {
+            controller = new MouseController();
+        }
+        return controller;
+    }
 
     void processHexClick(GameObject ourHitObject) {
         if (Input.GetMouseButtonDown(0)) {

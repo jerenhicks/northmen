@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TimeController : MonoBehaviour {
 
-    public static TimeController controller = null;
+    public static TimeController instance = null;
     private static int month = 1;
     private static int day = 1;
     private static int year = 100;
@@ -20,11 +20,13 @@ public class TimeController : MonoBehaviour {
 	}
 
     void Awake() {
-        controller = this;
+        if (instance == null) {
+            instance = this;
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         if (this.playing) {
             if (Time.time - lastChange > 1.0) {
                 Debug.Log("updating time");

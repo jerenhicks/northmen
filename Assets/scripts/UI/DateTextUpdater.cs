@@ -18,6 +18,6 @@ public class DateTextUpdater : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        myText.text = TimeController.controller.getTime();
+        myText.text = TimeController.instance.getTime();
 	}
 }

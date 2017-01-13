@@ -26,7 +26,7 @@ public class LoadMapButton : MonoBehaviour {
     public void onClick() {
         Debug.Log("on click loading");
 
-        MapController.controller.loadMapFromFile();
+        MapController.instance.loadMapFromFile();
 
     }
 }

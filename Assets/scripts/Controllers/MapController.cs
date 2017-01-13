@@ -6,26 +6,80 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour {
 
-    public static MapController controller = null;
-    public GameObject hexPrefab;
-
-    public Material[] material;
-
-    private static int width = 64;
-    private static int height = 80;
-
-    float xOffset = 0.882f;
-    float yOffset = 0.764f;
-
+    public static MapController instance = null;
+    private GameObject hexPrefab;
+    private Material[] material;
+    private int width;
+    private int height;
+    private float xOffset = 0.882f;
+    private float yOffset = 0.764f;
     private MapItem mapContainer;
 
     void Awake() {
-        controller = this;
+        if (instance == null) {
+            instance = this;
+        }
     }
 
-    // Use this for initialization
-    void Start () {
+    public int getWidth() {
+        return width;
+    }
 
+    public int getHeight() {
+        return height;
+    }
+
+    private void createMap() {
+        int count = 0;
+        for (int x = 0; x < mapContainer.width; x++) {
+            for (int y = 0; y < mapContainer.height; y++) {
+
+                float xPos = x * xOffset;
+                if (y % 2 == 1) {
+                    xPos += xOffset / 2f;
+                }
+
+                if (hexPrefab == null) {
+                    Debug.Log("HexPrefab is null");
+                }
+                GameObject hex_go = (GameObject)Instantiate(hexPrefab, new Vector3(xPos, 0, y * yOffset), Quaternion.identity);
+
+                hex_go.name = "Hex_" + x + "_" + y;
+                hex_go.GetComponent<hex>().x = x;
+                hex_go.GetComponent<hex>().y = y;
+
+                GameObject test = GameObject.Find("Map");
+                if (test == null) {
+                    Debug.Log("Map object not found, failing out");
+                    return;
+                }
+
+                hex_go.transform.SetParent(test.transform);
+
+                MapTile tile = mapContainer.tiles[count];
+                TerrainEnum terrainType = (TerrainEnum)System.Enum.Parse(typeof(TerrainEnum), tile.terrainType, true);
+                hex_go.GetComponent<hex>().setTerrain(terrainType);
+                hex_go.GetComponent<hex>().setGameObject(hex_go);
+
+                hex_go.isStatic = true;
+                count++;
+            }
+        }
+    }
+
+    public void setTerrainMaterials(Material[] materials) {
+        material = materials;
+    }
+
+    public void setPrefab(GameObject prefab) {
+        Debug.Log("Prefab being set");
+        if (prefab == null) {
+            Debug.Log("Prefab is null....");
+        }
+        hexPrefab = prefab;
+    }
+
+    public void loadStaticMap() {
         //this just creates a random thing here.
         mapContainer = new MapItem();
         mapContainer.height = 64;
@@ -39,54 +93,14 @@ public class MapController : MonoBehaviour {
 
 
         createMap();
-
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public static int getWidth() {
-        return width;
-    }
-
-    public static int getHeight() {
-        return height;
-    }
-
-    private void createMap() {
-        int count = 0;
-        for (int x = 0; x < mapContainer.width; x++) {
-            for (int y = 0; y < mapContainer.height; y++) {
-
-                float xPos = x * xOffset;
-                if (y % 2 == 1) {
-                    xPos += xOffset / 2f;
-                }
-                GameObject hex_go = (GameObject)Instantiate(hexPrefab, new Vector3(xPos, 0, y * yOffset), Quaternion.identity);
-
-                hex_go.name = "Hex_" + x + "_" + y;
-                hex_go.GetComponent<hex>().x = x;
-                hex_go.GetComponent<hex>().y = y;
-
-                hex_go.transform.SetParent(this.transform);
-
-                MapTile tile = mapContainer.tiles[count];
-                TerrainEnum terrainType = (TerrainEnum)System.Enum.Parse(typeof(TerrainEnum), tile.terrainType, true);
-                hex_go.GetComponent<hex>().setTerrain(terrainType);
-                hex_go.GetComponent<hex>().setGameObject(hex_go);
-
-                hex_go.isStatic = true;
-                count++;
-            }
-        }
     }
 
     public void loadMapFromFile() {
         clearMap();
         TextAsset asset = Resources.Load("map1") as TextAsset;
         MapItem m = JsonUtility.FromJson<MapItem>(asset.text);
+        this.width = m.width;
+        this.height = m.height;
         mapContainer = m;
         createMap();
     }

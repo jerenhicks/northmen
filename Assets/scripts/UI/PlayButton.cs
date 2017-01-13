@@ -26,11 +26,11 @@ public class PlayButton : MonoBehaviour {
 
     public void onClick() {
         Debug.Log("on click");
-        if (TimeController.controller.isPlaying()) {
-            TimeController.controller.pause();
+        if (TimeController.instance.isPlaying()) {
+            TimeController.instance.pause();
             myButton.GetComponentsInChildren<Text>()[0].text = "Play";
         } else {
-            TimeController.controller.play();
+            TimeController.instance.play();
             myButton.GetComponentsInChildren<Text>()[0].text = "Pause";
         }
     }
