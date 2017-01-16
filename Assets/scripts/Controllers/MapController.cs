@@ -13,7 +13,7 @@ public class MapController : MonoBehaviour {
     private int height;
     private float xOffset = 0.882f;
     private float yOffset = 0.764f;
-    private MapItem mapContainer;
+    private Map mapContainer;
 
     void Awake() {
         if (instance == null) {
@@ -57,8 +57,7 @@ public class MapController : MonoBehaviour {
                 hex_go.transform.SetParent(test.transform);
 
                 MapTile tile = mapContainer.tiles[count];
-                TerrainEnum terrainType = (TerrainEnum)System.Enum.Parse(typeof(TerrainEnum), tile.terrainType, true);
-                hex_go.GetComponent<hex>().setTerrain(terrainType);
+                hex_go.GetComponent<hex>().setMapTile(tile);
                 hex_go.GetComponent<hex>().setGameObject(hex_go);
 
                 hex_go.isStatic = true;
@@ -81,13 +80,13 @@ public class MapController : MonoBehaviour {
 
     public void loadStaticMap() {
         //this just creates a random thing here.
-        mapContainer = new MapItem();
+        mapContainer = new Map();
         mapContainer.height = 64;
         mapContainer.width = 80;
         mapContainer.tiles = new List<MapTile>();
         for (int x = 0; x < 64 * 80; x++) {
             MapTile tile = new MapTile();
-            tile.terrainType = "Grass";
+            tile.setTerrainType("Grass");
             mapContainer.tiles.Add(tile);
         }
 
@@ -98,7 +97,7 @@ public class MapController : MonoBehaviour {
     public void loadMapFromFile() {
         clearMap();
         TextAsset asset = Resources.Load("map1") as TextAsset;
-        MapItem m = JsonUtility.FromJson<MapItem>(asset.text);
+        Map m = JsonUtility.FromJson<Map>(asset.text);
         this.width = m.width;
         this.height = m.height;
         mapContainer = m;
@@ -109,6 +108,5 @@ public class MapController : MonoBehaviour {
         foreach (hex o in Object.FindObjectsOfType<hex>()) {
             Destroy(o.gameObject);
         }
-
     }
 }

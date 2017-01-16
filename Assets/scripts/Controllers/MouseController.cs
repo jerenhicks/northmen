@@ -7,15 +7,16 @@ public class MouseController : MonoBehaviour {
 
     Unit selectedUnit;
     private hex previousSelectedHex;
-    private static MouseController controller;
+    public static MouseController instance = null;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
         //Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         if (EventSystem.current.IsPointerOverGameObject()) {
@@ -37,17 +38,6 @@ public class MouseController : MonoBehaviour {
         }
 	}
 
-    private MouseController() {
-
-    }
-
-    public static MouseController getInstance() {
-        if (controller == null) {
-            controller = new MouseController();
-        }
-        return controller;
-    }
-
     void processHexClick(GameObject ourHitObject) {
         if (Input.GetMouseButtonDown(0)) {
 
@@ -60,15 +50,6 @@ public class MouseController : MonoBehaviour {
             
             previousSelectedHex = hex;
 
-            //MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
-
-            //if (mr.material.color == Color.red) {
-            //    mr.material.color = Color.white;
-            //}
-            //else {
-            //    mr.material.color = Color.red;
-            //}
-
             if (selectedUnit != null) {
                 selectedUnit.destination = ourHitObject.transform.position;
             }
@@ -80,4 +61,22 @@ public class MouseController : MonoBehaviour {
             selectedUnit = ourHitObject.GetComponent<Unit>();
         }
     }
+
+    public bool isTileSelected() {
+        return previousSelectedHex != null;
+    }
+
+    public MapTile getTileSelected() {
+        if (previousSelectedHex == null) {
+            return null;
+        }
+        else {
+            return previousSelectedHex.getMapTile();
+        }
+    }
+
+    public bool isUnitSelected() {
+        return selectedUnit != null;
+    }
+
 }

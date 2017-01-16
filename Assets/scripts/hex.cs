@@ -6,11 +6,11 @@ public class hex : MonoBehaviour {
 
     public int x;
     public int y;
-    private TerrainEnum terrain = TerrainEnum.UNKNOWN;
     private GameObject gameObj;
     public Material[] material;
     private bool selected;
     private Color previousColor;
+    private MapTile mapTile;
 
     // Use this for initialization
     void Start() {
@@ -24,14 +24,14 @@ public class hex : MonoBehaviour {
     }
 
     private void processTerrain() {
-        if (terrain == TerrainEnum.UNKNOWN || gameObj == null) {
+        if (this.mapTile.getTerrainType() == TerrainEnum.UNKNOWN || gameObj == null) {
             Renderer renderer = gameObject.GetComponentInChildren<Renderer>();
             if (renderer != null) {
-                if ((int)terrain > material.Length) {
+                if ((int) this.mapTile.getTerrainType() > material.Length) {
                     Debug.LogError("hex.cs: Error while trying to map to material... Was not enough materials added to hex.cs. Verify material based on TerrainEnum.");
                 }
                 else {
-                    renderer.material = material[(int)terrain];
+                    renderer.material = material[(int)this.mapTile.getTerrainType()];
                 }
             }
             else {
@@ -40,13 +40,8 @@ public class hex : MonoBehaviour {
         }
     }
 
-    public void setTerrain(TerrainEnum terrain) {
-        this.terrain = terrain;
-        this.processTerrain();
-    }
-
     public TerrainEnum getTerrain() {
-        return this.terrain;
+        return this.mapTile.getTerrainType();
     }
 
     public void setGameObject(GameObject gameObject) {
@@ -72,5 +67,14 @@ public class hex : MonoBehaviour {
 
     public bool isSelected() {
         return this.selected;
+    }
+
+    public void setMapTile(MapTile tile) {
+        this.mapTile = tile;
+        this.processTerrain();
+    }
+
+    public MapTile getMapTile() {
+        return this.mapTile;
     }
 }
